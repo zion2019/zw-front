@@ -16,15 +16,16 @@
     <div class="window-content-container">
       <div class="window-content">
         <slot></slot>
+        <div class="window-option-container">
+          <el-button v-for="button in (buttons as Button[])" 
+            :type="button.type" 
+            :plain="button.isPlain ? true : false"
+            @click="button.function">
+            {{ button.label }}
+          </el-button>
+        </div>
       </div>
-      <div class="window-option-container">
-        <el-button v-for="button in (buttons as Button[])" 
-          :type="button.type" 
-          :plain="button.isPlain ? true : false"
-          @click="button.function">
-          {{ button.label }}
-        </el-button>
-    </div>
+
 
     </div>
   </div>

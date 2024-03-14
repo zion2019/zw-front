@@ -15,8 +15,8 @@
                         @click="gotoTask(item)"
                         style="display: flex;justify-content: center;" 
                         type="circle" 
-                        :percentage="item.toDayCompletePercent"
-                        :status="progressStatus(item.toDayCompletePercent)" >
+                        :percentage="item.completePercent"
+                        :status="progressStatus(item.completePercent)" >
                         <el-text tag="b" size="large">{{item.title}}</el-text>
                       </el-progress>
                       <div style="display: flex;justify-content: center;"  v-if="item.id == '-1'">
@@ -45,8 +45,8 @@
                         @click="practise(item)"
                         style="display: flex;justify-content: center;" 
                         type="circle" 
-                        :percentage="item.toDayCompletePercent"
-                        :status="progressStatus(item.toDayCompletePercent)" >
+                        :percentage="item.completePercent"
+                        :status="progressStatus(item.completePercent)" >
                         <el-text tag="b" size="large">{{item.title}}</el-text>
                       </el-progress>
                       <div style="display: flex;justify-content: center;"  v-if="item.id == '-1'">
@@ -90,7 +90,7 @@
   import { onMounted,ref } from 'vue';
   import Window from '../components/Window.vue'
   import { useRouter } from 'vue-router';
-  import {PracticeService} from '../api/api';
+  import {PracticeService,TaskService} from '../api/api';
   import '../assets/carousel.css'
   import { ElMessage } from 'element-plus'
   import {useStore} from 'vuex'
@@ -102,25 +102,45 @@
   const tasks = ref([]);
   const router = useRouter();
   onMounted(async () => {
-    // try{
-    //   PracticeService.today({pageNo:0,pageSize:2})
-    //   .then((res)=>{
-    //     topics.value = res.dataList || [];
-    //     if(topics.value.length > 0){
+    try{
+      PracticeService.today({pageNo:0,pageSize:2})
+      .then((res)=>{
+        topics.value = res.dataList || [];
+        if(topics.value.length > 0){
           
-    //       topics.value = dataTemplates.value.map((template, index) => {
-    //         return topics.value[index] || template;
-    //       })
-    //       topics.value.push(dataMore.value);
-    //       isClear.value = false;
-    //     }
+          topics.value = practiceTemplates.value.map((template, index) => {
+            return topics.value[index] || template;
+          })
+          topics.value.push(dataMore.value);
+          todoDone.value = false;
+        }
         
-    //   }).catch(err=>{
-    //   })
-    // }catch(err){
-    //   console.log(err);
-    // }finally{      
-    // }
+      }).catch(err=>{
+      })
+    }catch(err){
+      console.log(err);
+    }finally{      
+    }
+
+    // 获取今日待办
+    try{
+      TaskService.todoPage({pageNo:1,pageSize:2})
+      .then((res)=>{
+        tasks.value = res.dataList || [];
+        if(tasks.value.length > 0){
+          tasks.value = taskTemplates.value.map((template, index) => {
+            return tasks.value[index] || template;
+          })
+          tasks.value.push(dataMore.value);
+          todoDone.value = false;
+        }
+        
+      }).catch(err=>{
+      })
+    }catch(err){
+      console.log(err);
+    }finally{      
+    }
     
   })
 
@@ -179,7 +199,23 @@
   }
 
   /**模版数据 */
-  const dataTemplates = ref([
+  const practiceTemplates = ref([
+    {
+        id:'1'
+        ,title:'模版主题'
+        ,background: 'gloomy'
+        ,completePercent: 25.03
+
+    },{
+      id:'2'
+      ,title:'模版主题'
+      ,background: 'shine'
+      ,completePercent: 50.05
+    }
+  ])
+
+  /**模版数据 */
+  const taskTemplates = ref([
     {
         id:'1'
         ,title:'模版主题'

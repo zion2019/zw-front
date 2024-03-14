@@ -48,7 +48,7 @@ axios.interceptors.response.use(
     if (response) {
       // 请求已发出，但是不在2xx的范围
      
-      if(response.status == 401){
+      if(response.status == 401 || response.status == 403){
         try {
           router.push({'name':'Login'});
         } catch (error) {

@@ -177,5 +177,11 @@ export class PracticeService {
  * @description -封装Task服务的接口方法
  */
 export class TaskService {      
-    
+    /**
+     * @description 今日任务分页 
+     * @return {HttpResponse} result
+     */
+    static async todoPage(params) {
+        return request('/learn/task/todo',params,'POST')
+    }
 }

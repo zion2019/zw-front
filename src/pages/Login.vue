@@ -27,7 +27,7 @@
     import { useRouter } from 'vue-router';
     const router = useRouter();
 
-        // 按钮定义
+    // 按钮定义
     const buttons = [
     {
         'type':'warning'
