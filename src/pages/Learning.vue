@@ -65,7 +65,7 @@
           <div class="card-content">
               <h2>快速入口～</h2>
               <div class="quick-option">
-                <button class="quick-button" style="background-color: #E0115F;">
+                <button class="quick-button" style="background-color: rgb(135 63 90);" @click="quick('TaskEdit')">
                   <el-text style="color: #fff;font-weight: bold;"><el-icon ><CirclePlus /></el-icon>记个待办</el-text>
                 </button>
                 <button class="quick-button" style="background-color: #E0115F;" @click="quick('PointEdit')">
@@ -195,6 +195,7 @@
   const quick = (component) =>{
     store.commit('setTopicId',null);
     store.commit('setPointId',null);
+    store.commit('setTaskId',null);
     router.push({name:component});
   }
 

@@ -5,6 +5,7 @@ import TopicEdit from '../pages/topic/TopicEdit.vue';
 import TopicList from '../pages/topic/TopicList.vue';
 import PointEdit from '../pages/point/PointEdit.vue';
 import PointList from '../pages/point/PointList.vue';
+import TaskEdit from '../pages/task/TaskEdit.vue';
 import PracticeList from '../pages/practice/PracticeList.vue';
 import Practice from '../pages/practice/Practice.vue';
 import Login from '../pages/Login.vue';
@@ -42,6 +43,12 @@ const routes = [
       path: '/point',
       name: 'PointEdit',
       component: PointEdit,
+      props: true
+    },
+    {
+      path: '/task',
+      name: 'TaskEdit',
+      component: TaskEdit,
       props: true
     },
     {

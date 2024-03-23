@@ -184,4 +184,24 @@ export class TaskService {
     static async todoPage(params) {
         return request('/learn/task/todo',params,'POST')
     }
+
+    /**
+     * @description save
+     * @return {HttpResponse} result
+     */
+    static async save(task) {
+        return request('/learn/task',task,'POST')
+    }
+
+        /**
+     * @description info
+     * @return {HttpResponse} result
+     */
+    static async info(taskId) {
+        if(!taskId){
+            return [];
+        }
+        return request('/learn/task/info/'+taskId,{},'GET')
+    }
+    
 }
