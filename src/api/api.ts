@@ -181,8 +181,8 @@ export class TaskService {
      * @description 今日任务分页 
      * @return {HttpResponse} result
      */
-    static async todoPage(params) {
-        return request('/learn/task/todo',params,'POST')
+    static async pages(params) {
+        return request('/learn/task/page',params,'POST')
     }
 
     /**
@@ -193,7 +193,7 @@ export class TaskService {
         return request('/learn/task',task,'POST')
     }
 
-        /**
+    /**
      * @description info
      * @return {HttpResponse} result
      */
@@ -202,6 +202,16 @@ export class TaskService {
             return [];
         }
         return request('/learn/task/info/'+taskId,{},'GET')
+    }
+    /**
+     * @description remove 
+     * @return {HttpResponse} result
+     */
+    static async remove(taskId) {
+        if(taskId == null){
+            return [];
+        }
+        return request('/learn/task',{taskId},'DELETE');
     }
     
 }

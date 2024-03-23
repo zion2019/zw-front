@@ -71,8 +71,8 @@
                 <button class="quick-button" style="background-color: #E0115F;" @click="quick('PointEdit')">
                   <el-text style="color: #fff;font-weight: bold;"><el-icon ><CirclePlus /></el-icon>记录知识</el-text>
                 </button>
-                <button class="quick-button" style="background-color: #4169E1;" @click="quick('TopicEdit')">
-                  <el-text style="color: #fff;font-weight: bold;"><el-icon ><CirclePlus /></el-icon>创建主题</el-text>
+                <button class="quick-button" style="background-color: #4169E1;" @click="quick('TaskList')">
+                  <el-text style="color: #fff;font-weight: bold;"><el-icon ><CirclePlus /></el-icon>任务管理</el-text>
                 </button>
                 <button class="quick-button" style="background-color: #FFD700;" @click="quick('TopicList')">
                   <el-text style="font-weight: bold;"><el-icon ><CirclePlus /></el-icon>主题管理</el-text>
@@ -103,7 +103,7 @@
   const router = useRouter();
   onMounted(async () => {
     try{
-      PracticeService.today({pageNo:0,pageSize:2})
+      PracticeService.today({pageNo:1,pageSize:2})
       .then((res)=>{
         topics.value = res.dataList || [];
         if(topics.value.length > 0){
@@ -124,7 +124,7 @@
 
     // 获取今日待办
     try{
-      TaskService.todoPage({pageNo:1,pageSize:2})
+      TaskService.pages({pageNo:1,pageSize:2,today:true})
       .then((res)=>{
         tasks.value = res.dataList || [];
         if(tasks.value.length > 0){
@@ -154,9 +154,10 @@
     // router.push({name:'Practice'});
   }
 
-    /** 练习列表 */
+  /** 今日任务列表 */
   function toMoreTask(){
-    // router.push({name:'PracticeList'});
+    store.commit('setTodayTask',true);
+    router.push({name:'TaskList'});
   }
 
   /** practise(item.completePercent) */

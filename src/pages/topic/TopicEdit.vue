@@ -1,13 +1,13 @@
 <template>
     <el-dialog v-model="dialogVisible" title="提示" width="60%" draggable>
-    <span>确认删除:{{topic.title}}</span>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="dialogVisible = false" type="success">取消</el-button>
-        <el-button type="danger" @click="remove" >删除</el-button>
-      </span>
-    </template>
-  </el-dialog>
+        <span>确认删除:{{topic.title}}</span>
+        <template #footer>
+        <span class="dialog-footer">
+            <el-button @click="dialogVisible = false" type="success">取消</el-button>
+            <el-button type="danger" @click="remove" >删除</el-button>
+        </span>
+        </template>
+    </el-dialog>
     <Window :buttons="buttons">
         <div class="edit-container">
             <div class="edit-form">

@@ -7,7 +7,9 @@ const store = createStore({
         topicId:''
         ,pointId:''
         ,fullTitle:''
-        ,isLoading: false,
+        ,isLoading: false
+        ,todayTask:false
+        ,taskId:''
       }
     },
     mutations: {
@@ -20,12 +22,18 @@ const store = createStore({
       setFullTitle(state,fullTitle){
         state.fullTitle = fullTitle;
       },
+      setTaskId(state,taskId){
+        state.taskId = taskId;
+      },
       startLoading(state) {
         state.isLoading = true;
       },
       stopLoading(state) {
         state.isLoading = false;
       },
+      setTodayTask(todayTask){
+        state.todayTask = todayTask;
+      }
   
     }
 })

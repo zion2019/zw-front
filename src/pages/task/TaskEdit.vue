@@ -57,16 +57,16 @@
     import Window from '../../components/Window.vue';
     import { ref,onMounted,reactive } from 'vue';
     import {TaskService,TopicService} from '../../api/api';
-    import { useRouter } from 'vue-router';
-    import {useStore} from 'vuex';
     import { ElMessage } from 'element-plus';
     import Editor from '../../components/Editor.vue';
-    const store = useStore()
+    import { useRouter, useRoute } from 'vue-router';
     const router = useRouter();
+    import {useStore} from 'vuex'
     const EditorRef = ref();
     const form = ref(null);
     // 确认删除
     const dialogVisible = ref(false)
+    const store = useStore();
 
     // 按钮定义
     const buttons = [
@@ -74,12 +74,11 @@
         'type':'warning'
         ,'isPlain':true
         ,'label':'返回'
-        ,'function':()=>{}
+        ,'function':()=>{router.back()}  
       }
     ]
     /** vuex中获取topicID */
-    // const taskId = store.state.taskId;
-    const taskId = '7176552809620312064';
+    const taskId = store.state.taskId;
     if(taskId){
         buttons.push({
             'type':'danger'
@@ -87,13 +86,21 @@
             ,'label':'删除'
             ,'function': ()=>{dialogVisible.value = true}
         });
+        buttons.push({
+            'type':'success'
+            ,'isPlain':false
+            ,'label':'编辑'
+            ,'function': save
+        });
+    }else{
+        buttons.push({
+            'type':'success'
+            ,'isPlain':false
+            ,'label':'添加'
+            ,'function': save
+        });
     }
-    buttons.push({
-        'type':'success'
-        ,'isPlain':false
-        ,'label':'添加'
-        ,'function': save
-    });
+   
     
     // 类别树定义
     const treeProps = {
@@ -124,7 +131,9 @@
         // 回显信息加载
         if (taskId) {
             const taskRes = await TaskService.info(taskId) as any;
-            task.value = taskRes.data;
+            if(taskRes.data){
+                task.value = taskRes.data;
+            }
         }
         // 加载类别树
         TopicService.tree(taskId)
@@ -140,10 +149,11 @@
         let {validate} = form.value as any 
             validate((valid:Boolean) => {
             if(valid) {
-                console.log(task.value);
+                task.value.id = taskId;
                 TaskService.save(task.value)
                 .then((res: any) => {
                     ElMessage.success('成功');
+                    router.back();
                 })
                 .catch((err: any) => {
                     ElMessage.error(err);
@@ -163,6 +173,14 @@
 
     /** 删除主题 */
     function remove(){
+        TaskService.remove(taskId)
+        .then((res: any) => {
+            ElMessage.success('成功');
+            router.back();
+        })
+        .catch((err: any) => {
+            ElMessage.error(err.message)
+        });
     }
     // 校验规则定义
     const rules = reactive({

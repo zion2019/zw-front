@@ -1,6 +1,6 @@
 <template>
     <div class="list-container">
-      <div class="list-search">
+      <div class="list-search" v-if="props.showSearch">
         <el-input
             v-model="keyword"
             class="w-50 m-1"
@@ -14,16 +14,23 @@
   </template>
   
   <script lang="ts" setup>
-  import { ref } from 'vue';
-  
-  import { Search } from '@element-plus/icons-vue';
-  const emits = defineEmits(['keywordChange']);
-  const keyword = ref('');
+    import { ref } from 'vue';
+    
+    import { Search } from '@element-plus/icons-vue';
+    const emits = defineEmits(['keywordChange']);
+    const props = defineProps({
+      showSearch: {
+        type: Boolean,
+        required:false,
+        default:true
+      }
+    });
+    const keyword = ref('');
+    const showSearch = ref(true);
 
-
-  const search = () => {
-    emits('keywordChange', keyword.value);
-  }
+    const search = () => {
+      emits('keywordChange', keyword.value);
+    }
   </script>
   
   <style scoped>

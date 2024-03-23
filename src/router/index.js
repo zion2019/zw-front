@@ -6,6 +6,7 @@ import TopicList from '../pages/topic/TopicList.vue';
 import PointEdit from '../pages/point/PointEdit.vue';
 import PointList from '../pages/point/PointList.vue';
 import TaskEdit from '../pages/task/TaskEdit.vue';
+import TaskList from '../pages/task/TaskList.vue';
 import PracticeList from '../pages/practice/PracticeList.vue';
 import Practice from '../pages/practice/Practice.vue';
 import Login from '../pages/Login.vue';
@@ -70,6 +71,11 @@ const routes = [
       path: '/practice/list',
       name: 'PracticeList',
       component: PracticeList
+    },
+    {
+      path: '/task/list',
+      name: 'TaskList',
+      component: TaskList
     },
   ];
   
