@@ -80,13 +80,11 @@ onMounted(async () => {
     return listData;
 });
 const edit = (node: Tree) => {
-    store.commit('setTopicId',node.data.id);
-    router.push({name:'TopicEdit'});
+    router.push({name:'TopicEdit', state: { topicId : node.data.id}});
 }
 
 function toNew(){
-    store.commit('setTopicId',null);
-    router.push({name:'TopicEdit'});
+    router.push({name:'TopicEdit', state: { topicId : null}});
 }
 
 </script>

@@ -78,7 +78,7 @@
       }
     ]
     /** vuex中获取topicID */
-    const taskId = store.state.taskId;
+    const taskId = history.state.taskId;
     if(taskId){
         buttons.push({
             'type':'danger'

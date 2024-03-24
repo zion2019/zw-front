@@ -31,7 +31,7 @@
 
             <!-- 操作区域 -->
             <div class="buttons" v-if="showButton">
-                <el-button type="info"  @click="toPracticeList()">列表</el-button>
+                <el-button type="info"  @click="goback()">返回</el-button>
                 <el-button type="danger" v-if="showSkeleton" @click="practise('FORGET')">忘记</el-button>
                 <el-button type="success" v-if="showSkeleton" @click="practise('DONE')">记得</el-button>
                 <el-button type="warning" v-if="!showSkeleton" @click="loadNextPoint">Next</el-button>
@@ -64,8 +64,8 @@ interface Point{
 }
 
 /** vux获取参数 */
-const topicId = store.state.topicId;
-const topicTitle = store.state.fullTitle;
+const topicId = history.state.topicId;
+const topicTitle = history.state.fullTitle;
 
 const practice = ref({
     id:'',
@@ -103,9 +103,9 @@ function lazyDirectList(){
 
 onMounted(loadNextPoint);
 
-/** 回列表 */
-function toPracticeList(){
-    router.push({name:'PracticeList'})
+/** 返回 */
+function goback(){
+    router.back();
 }
 
 /**

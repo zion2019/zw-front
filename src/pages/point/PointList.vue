@@ -30,7 +30,7 @@ import { useRouter } from 'vue-router';
 import {useStore} from 'vuex'
 const store = useStore()
 const router = useRouter();
-const topicId = store.state.topicId;
+const topicId = history.state.topicId;
 
 interface Point {
   title: string;
@@ -105,20 +105,15 @@ function resetList() {
 
 /** 编辑知识点 */
 function editPoint(pointId){
-  store.commit('setPointId',pointId);
-  store.commit('setTopicId',topicId);
-  router.push({ name: 'PointEdit'});
+  router.push({name:'PointList', state: { topicId : topicId,point:pointId}});
 }
 function newPoint(){
-  store.commit('setTopicId',topicId);
-  store.commit('setPointId',null);
-  router.push({ name: 'PointEdit'});
+  router.push({name:'PointList', state: { topicId : topicId,point:null}});
 }
 
 /** 回退至主题页 */
 function back(){
-  store.commit('setTopicId',topicId);
-  router.push({ name: 'TopicEdit'});
+  router.back();
 }
 
 </script>

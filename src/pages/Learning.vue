@@ -144,7 +144,22 @@
     
   })
 
-  /** practise(item.completePercent) */
+
+
+/**
+ * 管理各种跳转部分 start
+ */
+  // 快捷方式跳转
+  const quick = (component) =>{
+    router.push({name:component, state: { todayTask: false,topicId:null,pointId:null,taskId:null}});
+  }
+
+  // more task
+  function toMoreTask(){
+    router.push({name:'TaskList', state: { todayTask: true }});
+  }
+
+  // to handle task
   function gotoTask(task){
     if(task.toDayCompletePercent >= 100 || task.toDayCompletePercent < 0){
       ElMessage.success("完成啦");
@@ -154,28 +169,23 @@
     // router.push({name:'Practice'});
   }
 
-  /** 今日任务列表 */
-  function toMoreTask(){
-    store.commit('setTodayTask',true);
-    router.push({name:'TaskList'});
-  }
-
-  /** practise(item.completePercent) */
+  //practise(item.completePercent) 
   function practise(topic){
     if(topic.toDayCompletePercent >= 100 || topic.toDayCompletePercent < 0){
       ElMessage.success("已经复习完啦");
       return;
     }
-
-    store.commit('setFullTitle',topic.fullTitle);
-    store.commit('setTopicId',topic.topicId);
-    router.push({name:'Practice'});
+    router.push({name:'Practice', state: { topicId: topic.topicId, fullTitle:topic.fullTitle}});
   }
 
-  /** 练习列表 */
+  // more practice
   function toMorePractice(){
     router.push({name:'PracticeList'});
   }
+
+/**
+ * 管理各种跳转部分 end
+ */
 
   // 轮播图进度条样式
   const progressStatus = (completePercent) =>{
@@ -190,14 +200,6 @@
     }
 
     return 'exception';
-  }
-
-  /** 快捷创建列表 */
-  const quick = (component) =>{
-    store.commit('setTopicId',null);
-    store.commit('setPointId',null);
-    store.commit('setTaskId',null);
-    router.push({name:component});
   }
 
   /**模版数据 */

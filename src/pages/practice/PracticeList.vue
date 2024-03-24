@@ -107,15 +107,12 @@ function practise(topic : Topic){
     ElMessage.success("已经复习完啦");
     return;
   }
-  store.commit('setTopicId',topic.topicId);
-  store.commit('setPointId',topic.pointId);
-  store.commit('setFullTitle',topic.fullTitle);
-  router.push({ name: 'Practice'});
+  router.push({name:'Practice', state: { topicId:topic.topicId,pointId:topic.pointId,fullTitle:topic.fullTitle}});
 }
 
 /** 回退至学习页 */
 function back(){
-  router.push({ name: 'Learning'});
+  router.back();
 }
 
 </script>

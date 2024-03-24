@@ -13,6 +13,9 @@ const store = createStore({
       }
     },
     mutations: {
+      setParams(state,params){
+        state.params = params;
+      },
       setTopicId(state,topicId){
         state.topicId = topicId;
       },
@@ -31,8 +34,11 @@ const store = createStore({
       stopLoading(state) {
         state.isLoading = false;
       },
-      setTodayTask(todayTask){
+      setTodayTask(state,todayTask){
         state.todayTask = todayTask;
+      },
+      setLastRoute(state,lastRoute){
+        state.lastRoute = lastRoute;
       }
   
     }

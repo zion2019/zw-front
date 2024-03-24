@@ -47,7 +47,7 @@ const router = useRouter();
 
 // 临时变量
 const topicId= ref('');
-const todayTask = store.state.todayTask;
+const todayTask = history.state.todayTask;
 
 // 树组件引用
 const treeProps = {
@@ -76,13 +76,17 @@ const buttons = [
         'type':'warning'
         ,'isPlain':true
         ,'label':'返回'
-        ,'function':()=>{}
+        ,'function':()=>{
+            router.back();
+        }
     },
     {
-        'type':'warning'
+        'type':'success'
         ,'isPlain':true
         ,'label':'新增'
-        ,'function':()=>{}
+        ,'function':()=>{
+            router.push({name:'TaskEdit'});
+        }
     }
 ]
 

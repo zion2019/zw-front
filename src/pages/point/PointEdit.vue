@@ -92,16 +92,16 @@ const point = reactive({
 });
 
 // 当前参数携带的PointId
-const pointId = store.state.pointId;
-point.topicId = store.state.topicId as string;
+const pointId = history.state.pointId;
+point.topicId = history.state.topicId as string;
 
 // 返回列表按钮
 const buttons = [
   {
     'type':'warning'
     ,'isPlain':true
-    ,'label':'列表'
-    ,'function': toList
+    ,'label':'返回'
+    ,'function': ()=>{router.back()}
   }
 ]
 // 删除 按钮展示逻辑
@@ -206,8 +206,7 @@ function submitForm(){
 };
 
 function toList(){
-  store.commit('setTopicId',point.topicId);
-  router.push({name:"PointList"});
+  router.push({name:'PointList', state: { topicId : point.topicId}});
 }
 
 function remove (){

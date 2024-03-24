@@ -74,7 +74,7 @@
       }
     ]
     /** vuex中获取topicID */
-    const topicId = store.state.topicId;
+    const topicId = history.state.topicId;
     if(topicId){
         buttons.push({
             'type':'danger'
@@ -155,8 +155,7 @@
 
     const toList = () => {router.push({name:"TopicList"});}
     const listPoint = () => {
-        store.commit('setTopicId',topicId);
-        router.push({name:'PointList'})
+        router.push({name:'PointList', state: { topicId:topicId}});
     };
 
     /** 删除主题 */
