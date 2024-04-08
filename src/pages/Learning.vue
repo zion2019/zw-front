@@ -12,7 +12,7 @@
                     <div class="progress-item" :class=item.background>
                       <el-progress
                         v-if="item.id != '-1'"
-                        @click="gotoTask(item)"
+                        @click="handleTask(item)"
                         style="display: flex;justify-content: center;" 
                         type="circle" 
                         :percentage="item.completePercent"
@@ -112,7 +112,7 @@
             return topics.value[index] || template;
           })
           topics.value.push(dataMore.value);
-          todoDone.value = false;
+          practiceDone.value = false;
         }
         
       }).catch(err=>{
@@ -160,13 +160,8 @@
   }
 
   // to handle task
-  function gotoTask(task){
-    if(task.toDayCompletePercent >= 100 || task.toDayCompletePercent < 0){
-      ElMessage.success("完成啦");
-      return;
-    }
-
-    // router.push({name:'Practice'});
+  function handleTask(task){
+    router.push({name:'TaskHandle', state: { taskId: task.taskId }});
   }
 
   //practise(item.completePercent) 

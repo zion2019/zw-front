@@ -7,6 +7,7 @@ import PointEdit from '../pages/point/PointEdit.vue';
 import PointList from '../pages/point/PointList.vue';
 import TaskEdit from '../pages/task/TaskEdit.vue';
 import TaskList from '../pages/task/TaskList.vue';
+import TaskHandle from '../pages/task/TaskHandle.vue';
 import PracticeList from '../pages/practice/PracticeList.vue';
 import Practice from '../pages/practice/Practice.vue';
 import Login from '../pages/Login.vue';
@@ -76,6 +77,11 @@ const routes = [
       path: '/task/list',
       name: 'TaskList',
       component: TaskList
+    },
+    {
+      path: '/task/handle',
+      name: 'TaskHandle',
+      component: TaskHandle
     },
   ];
   

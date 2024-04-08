@@ -176,7 +176,7 @@ export class PracticeService {
 /**
  * @description -封装Task服务的接口方法
  */
-export class TaskService {      
+export class TaskService {  
     /**
      * @description 今日任务分页 
      * @return {HttpResponse} result
@@ -212,6 +212,29 @@ export class TaskService {
             return [];
         }
         return request('/learn/task',{taskId},'DELETE');
+    }
+
+    /**
+     * @description delay
+     * @return {HttpResponse} result
+     */
+    static async delay(taskId) {
+        if(!taskId){
+            return [];
+        }
+        return request('/learn/task/delay/'+taskId,{},'PUT')
+    }
+
+
+    /**
+     * @description finish
+     * @return {HttpResponse} result
+     */
+    static async finish(taskId) {
+        if(!taskId){
+            return [];
+        }
+        return request('/learn/task/finish/'+taskId,{},'PUT')
     }
     
 }

@@ -17,7 +17,7 @@
                 class="list"
                 :infinite-scroll-disabled="disabled">
                 <li 
-                    v-for="task in taskList" :key="task.id" 
+                    v-for="task in taskList" :key="task.taskId" 
                     @click="handleTask(task)" class="list-item" :class=task.background>
                         <el-text size="large" tag="i">{{task.title}}</el-text>
                         <el-tag v-if="task.expireTag" :type="task.expireTag.tagType" >{{task.expireTag.tagName}}</el-tag>
@@ -61,7 +61,7 @@ const topicTreeDatas = ref([]);
 
 interface Task {
   title: string;
-  id: string;
+  taskId: string;
   topicId:string;
   expireTag: {
     tagType:String
@@ -136,7 +136,11 @@ onMounted(async () =>{
 
 /** 处理任务 */
 function handleTask(task : Task){
-  
+  if(todayTask){
+    router.push({name:'TaskHandle', state: { taskId: task.taskId }});
+  }else{
+    router.push({name:'TaskEdit', state: { taskId: task.taskId }});
+  }
 }
 
 /** 执行搜索 */
