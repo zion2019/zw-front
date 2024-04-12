@@ -17,7 +17,7 @@
                         type="circle" 
                         :percentage="item.completePercent"
                         :status="progressStatus(item.completePercent)" >
-                        <el-text tag="b" size="large">{{item.title}}</el-text>
+                        <el-text tag="b" size="large" truncated>{{item.title}}</el-text>
                       </el-progress>
                       <div style="display: flex;justify-content: center;"  v-if="item.id == '-1'">
                         <el-button  type="success" @click="toMoreTask" round>MORE</el-button>
@@ -93,8 +93,6 @@
   import {PracticeService,TaskService} from '../api/api';
   import '../assets/carousel.css'
   import { ElMessage } from 'element-plus'
-  import {useStore} from 'vuex'
-  const store = useStore();
 
   const practiceDone = ref(true);
   const todoDone = ref(true);
@@ -107,6 +105,13 @@
       .then((res)=>{
         topics.value = res.dataList || [];
         if(topics.value.length > 0){
+
+          topics.value.map((topic) => {
+            if (topic.title.length >= 5) {
+                topic.title = topic.title.slice(0, 5) + "...";
+            } 
+            return topic;
+          });
           
           topics.value = practiceTemplates.value.map((template, index) => {
             return topics.value[index] || template;
@@ -128,6 +133,12 @@
       .then((res)=>{
         tasks.value = res.dataList || [];
         if(tasks.value.length > 0){
+          tasks.value.map((task) => {
+            if (task.title.length >= 5) {
+              task.title = task.title.slice(0, 5) + "...";
+            } 
+            return task;
+          });
           tasks.value = taskTemplates.value.map((template, index) => {
             return tasks.value[index] || template;
           })
