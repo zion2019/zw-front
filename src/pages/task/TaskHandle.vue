@@ -10,11 +10,8 @@
                 <el-form-item label="所属主题:">
                     <el-text tag="i">{{task.topicFulTitle}}</el-text>
                 </el-form-item>
-                <el-form-item label="开始时间:">
-                    <el-tag class="ml-2" type="success">{{task.startTime}}</el-tag>
-                </el-form-item>
-                <el-form-item label="结束时间:">
-                    <el-tag class="ml-2" type="success">{{task.endTime}}</el-tag>
+                <el-form-item label="任务时间:">
+                    <el-tag class="ml-2" type="success">{{task.taskTime}}</el-tag>
                 </el-form-item>
             </div>
 
@@ -53,8 +50,7 @@ const task = ref({
     title:"",
     content:"",
     topicId:"",
-    startTime: '',
-    endTime: '',
+    taskTime: '',
     routine: false,
     routineCron:"",
     topicFulTitle:""

@@ -25,20 +25,26 @@
                                 :data="topicTreeDatas" 
                                 v-model="task.topicId" />
                         </el-form-item>
-                        <el-form-item prop="startTime" label ="开始时间 :">
-                            <el-date-picker v-model="task.startTime" type="datetime" format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm:ss"  placeholder="点击选择"> </el-date-picker>
+                        <el-form-item prop="taskTime" label ="任务时间 :">
+                            <el-date-picker v-model="task.taskTime" type="datetime" format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm:ss"  placeholder="点击选择"> </el-date-picker>
                         </el-form-item>
-                        <el-form-item prop="endTime"  label ="结束时间 :">
-                            <el-date-picker v-model="task.endTime" type="datetime" format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm:ss"  placeholder="点击选择"> </el-date-picker>
+                        <el-form-item label="任务提醒 :" >
+                            <el-input-number v-model="task.remindTimeNum" :min="1" :max="60"/>
+                            <el-select v-model="task.remindTimeType" placeholder="提前时间类型">
+                                <el-option label="时" value="0" />
+                                <el-option label="日" value="2" />
+                                <el-option label="分" value="1" />
+                            </el-select>
                         </el-form-item>
-                        <el-form-item label="日常任务 :">
+                       
+                        <el-form-item label="  日常任务 :">
                             <el-switch  v-model="task.routine" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
                         </el-form-item>
-                        <el-form-item label="执行频率 :" v-if="task.routine">
+                        <el-form-item label="  执行频率 :" v-if="task.routine">
                             <el-input v-model="task.routineCron" placeholder="CRON表达式"></el-input>
                         </el-form-item>
                             
-                        <el-form-item label="内容:" prop="content">
+                        <el-form-item label="  内容:" prop="content">
                             <div v-html="task.content" class="preview-content"></div>
                             
                             <el-icon :size="30" @click="showEditor(0,task.content)">
@@ -121,8 +127,9 @@
         title:"",
         content:"",
         topicId:"",
-        startTime: '',
-        endTime: '',
+        taskTime: '',
+        remindTimeType: '0',
+        remindTimeNum: '30',
         routine: false,
         routineCron:""
     });
@@ -189,8 +196,7 @@
             { pattern: /^.{1,10}$/, message: '10 characters maximum' },
         ],
         topicId: [{ required: true, message: 'Please choose a topic', trigger: 'blur' }],
-        startTime: [{ required: true, message: 'Please pick startTime', trigger: 'blur' }],
-        endTime: [{ required: true, message: 'Please pick endTime', trigger: 'blur' }],
+        taskTime: [{ required: true, message: 'Please pick taskTime', trigger: 'blur' }],
     });
 
 
