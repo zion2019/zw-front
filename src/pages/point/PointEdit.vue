@@ -9,7 +9,7 @@
     </template>
   </el-dialog>
   <Window  :buttons="buttons">
-    <Editor ref="EditorRef" @editorValueChange="editorValueChange" />
+    <Editor ref="EditorRef" @editorValueChange="editorValueChange" :title="point.title"/>
     <div class="edit-container">
       <div class="edit-form">
         <el-form ref="form" :model="point" label-width="80px" :rules="rules">

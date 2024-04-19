@@ -1,6 +1,6 @@
 <template>
     <div class="editor" v-show="isShow">
-        <el-text class="mx-1" size="large">正在编辑：xxx</el-text>
+        <el-text class="mx-1" size="large">正在编辑：{{props.title}}</el-text>
         <div class="editor-primary">
             <!-- 此处注意写法v-model:content -->
             <QuillEditor ref="myQuillEditor"
@@ -25,7 +25,7 @@
     import '@vueup/vue-quill/dist/vue-quill.snow.css'
     const isShow = ref(false);
     const innerIndex = ref();
-    const props = defineProps(['value'])
+    const props = defineProps(['value','title'])
     const emit = defineEmits(['editorValueChange'])
     const content = ref('')
     const myQuillEditor = ref()

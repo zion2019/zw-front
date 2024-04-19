@@ -9,7 +9,7 @@
     </template>
   </el-dialog>
     <Window :buttons="buttons">
-        <Editor ref="EditorRef" @editorValueChange="editorValueChange" />
+        <Editor ref="EditorRef" @editorValueChange="editorValueChange" :title="task.title"/>
         <div class="edit-container">
             <div class="edit-form">
                 <el-form ref="form" :model="task" :rules="rules">
@@ -171,6 +171,7 @@
 
     // 编辑器展示
     const showEditor = (index: number, content: string) => {
+        
         EditorRef.value.showEditor(index, content);
     };
     // 编辑完成回写

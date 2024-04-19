@@ -90,30 +90,42 @@ const buttons = [
     }
 ]
 
-const keyword = ref('');
 const taskList = ref<Task[]>([]);
 const pageNo = ref(0);
-const pageSize = 10;
+const pageSize = ref(10);
 const total = ref<number | null>(1);
 const loading = ref(false);
-const noMore = computed(() => total.value == null || taskList.value.length >= total.value);
-const disabled = computed(() => loading.value || noMore.value);
+const noMore = ref(false);
+const disabled = ref(false);
+
+function init(){
+  taskList.value = [];
+  pageNo.value = 0;
+  pageSize.value = 10;
+  total.value = 0;
+  loading.value = false;
+  noMore.value  = false;
+  disabled.value = false;
+}
+
 const load = async () => {
   if (loading.value || noMore.value) return;
-
   loading.value = true;
 
   try {
     const res = await TaskService.pages({
       pageNo: pageNo.value,
-      pageSize,
-      today: todayTask
+      pageSize:pageSize.value,
+      today: todayTask,
+      topicId:topicId.value
     }) as any;
     if(res.dataList != null && res.dataList.length > 0){
         taskList.value.push(...res.dataList);
     }
     total.value = res.total;
     pageNo.value++;
+    noMore.value = total.value == null || taskList.value.length >= total.value;
+    disabled.value = loading.value || noMore.value;
   } catch (error) {
     total.value = 0;
     console.error(error);
@@ -131,6 +143,7 @@ onMounted(async () =>{
         console.error(error);
     } 
     // 加载列表页
+    // init();
     load();
 })
 
@@ -145,7 +158,8 @@ function handleTask(task : Task){
 
 /** 执行搜索 */
 function search (){
-
+  init();
+  load();
 }
 
 
