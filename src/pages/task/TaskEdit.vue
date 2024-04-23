@@ -128,7 +128,7 @@
         content:"",
         topicId:"",
         taskTime: '',
-        remindTimeType: '0',
+        remindTimeType: '1',
         remindTimeNum: '30',
         routine: false,
         routineCron:""
