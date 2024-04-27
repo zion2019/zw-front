@@ -16,6 +16,9 @@
                         <el-form-item  prop="title">
                             <el-input v-model="topic.title" :maxlength="10" show-word-limit placeholder="主题名称"></el-input>
                         </el-form-item>
+                        <el-form-item  prop="code">
+                            <el-input v-model="topic.code" :maxlength="20" show-word-limit placeholder="主题编码"></el-input>
+                        </el-form-item>
                         <el-form-item prop="parentId">
                             <el-tree-select 
                                 check-strictly 
@@ -82,13 +85,21 @@
             ,'label':'删除'
             ,'function': ()=>{dialogVisible.value = true}
         });
+        buttons.push({
+            'type':'success'
+            ,'isPlain':false
+            ,'label':'更新'
+            ,'function': save
+        });
+    }else{
+        buttons.push({
+            'type':'success'
+            ,'isPlain':false
+            ,'label':'添加'
+            ,'function': save
+        });
     }
-    buttons.push({
-        'type':'success'
-        ,'isPlain':false
-        ,'label':'添加'
-        ,'function': save
-    });
+
     
 
     //  选中的父主题
@@ -112,6 +123,7 @@
         title:"",
         background:"",
         parentId:"",
+        code:"",
         statistic :{
             pointCount:0,
             percentOfMastery:0.0,
@@ -176,6 +188,7 @@
         ],
         parentId: [{ required: true, message: 'Please choose a topic', trigger: 'blur' }],
         background: [{ required: true, message: 'Please choose a topic', trigger: 'blur' }],
+        code: [{ required: true, message: 'Please enter the code', trigger: 'blur' }],
     });
 
 
