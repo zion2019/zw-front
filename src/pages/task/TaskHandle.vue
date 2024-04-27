@@ -17,18 +17,35 @@
 
             <!-- 文本区域 -->
             <div class="solution-container">
-                <div class="solution">
-                    <div v-html="task.content" class="preview-content"></div>
+                <div class="solution" v-if="!delayFormShow">
+                    <el-form-item label="完成情况:">
+                        <el-input v-model="finishRemark" type = "textarea" :maxlength="100" show-word-limit placeholder="又自律了兄弟～"></el-input>
+                    </el-form-item>
+                    <div v-html="task.content" class="preview-content"></div> 
                 </div>
-                
+                <div class="solution" v-if="delayFormShow">
+                    <el-form-item label="推迟 :" >
+                        <el-input-number v-model="delayForm.delayTimeNum" :min="1" :max="60"/>
+                        <el-select v-model="delayForm.delayTimeType" placeholder="提前时间类型">
+                            <el-option label="小时" value="0" />
+                            <el-option label="天" value="2" />
+                            <el-option label="分钟" value="1" />
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="推迟原因:">
+                            <el-input v-model="delayForm.delayReason" type = "textarea" :maxlength="100" show-word-limit placeholder="忙啥呢？"></el-input>
+                    </el-form-item>
+                </div>
             </div>
 
             <!-- 操作区域 -->
             <div class="buttons" v-if="showButton">
-                <el-button type="info"  @click="goback()">返回</el-button>
-                <el-button type="danger" v-if="showSkeleton" @click="delay()">推迟</el-button>
-                <el-button type="success" v-if="showSkeleton" @click="finish()">完成</el-button>
-                <el-button type="warning" v-if="!showSkeleton" @click="loadNextPoint">Next</el-button>
+                <el-button type="info" v-if="!delayFormShow"  @click="goback()">返回</el-button>
+                <el-button type="danger" v-if="!delayFormShow" @click="showDelay()">推迟</el-button>
+                <el-button type="success" v-if="!delayFormShow" @click="finish()">完成</el-button>
+                <el-button type="danger" v-if="delayFormShow" @click="delay()">确认推迟</el-button>
+                <el-button type="success" v-if="delayFormShow" @click="disableDelayForm()">取消</el-button>
+
             </div>
         </div>
     </Window>
@@ -55,17 +72,23 @@ const task = ref({
     routineCron:"",
     topicFulTitle:""
 });
+const finishRemark = ref();
+const delayFormShow = ref(false);
+const delayForm = ref({
+    delayTimeNum : 1
+    ,delayTimeType: "0"
+    ,delayReason:""
+    ,taskId:task.value.id
+});
+
 
 /** vux获取参数 */
 const taskId = history.state.taskId;
 
-
-// 骨架屏是否展示
-const showSkeleton = ref(true);
 const showButton = ref(true);
 
 /** 主题下题目加载 */
-const loadNextPoint = async () =>{
+const loadTaskInfo = async () =>{
     try {
         // 回显信息加载
         if (taskId) {
@@ -77,20 +100,17 @@ const loadNextPoint = async () =>{
       
     } catch (error) {
         console.error(error);
-        lazyDirectList();
-    } finally {
-        showSkeleton.value = true;
-    }
-}
-function lazyDirectList(){
-    showButton.value = false;
-    ElMessage.success('当前主题下已无复习题目，正在跳转至列表页～');
-    setTimeout(() => {
-        router.push({name:'PracticeList'});
-    }, 2000);
+    } 
 }
 
-onMounted(loadNextPoint);
+onMounted(loadTaskInfo);
+
+function showDelay(){
+    delayFormShow.value = true;
+}
+function disableDelayForm(){
+    delayFormShow.value = false;
+}
 
 /** 返回 */
 function goback(){
@@ -98,18 +118,30 @@ function goback(){
 }
 
 function delay(){
-    TaskService.delay(taskId).then((res : any)=>{
-        ElMessage.success('任务已延期！');
+    if(!delayForm.value.delayReason){
+        ElMessage.error('给个交待!(推迟原因)');
+        return;
+    }
+    delayForm.value.taskId = taskId;
+    TaskService.delay(delayForm.value).then((res : any)=>{
+        ElMessage.success('推迟成功！');
         setTimeout(() => {router.back() }, 2000);
     }).catch(err=>{
-        ElMessage.error('延期任务出错');
+        ElMessage.error('推迟任务出现问题');
         setTimeout(() => {router.back() }, 2000);
     })
 
 }
 
 function finish(){
-    TaskService.finish(taskId).then((res : any)=>{
+    if(!finishRemark.value){
+        ElMessage.error('完成了吗？备注一下???');
+        return;
+    }
+    TaskService.finish({
+        taskId:taskId
+        ,finishRemark:finishRemark.value
+    }).then((res : any)=>{
         ElMessage.success('完成任务');
         setTimeout(() => {router.back() }, 2000);
     }).catch(err=>{

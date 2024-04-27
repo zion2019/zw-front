@@ -218,11 +218,11 @@ export class TaskService {
      * @description delay
      * @return {HttpResponse} result
      */
-    static async delay(taskId) {
-        if(!taskId){
+    static async delay(delayQo) {
+        if(!delayQo){
             return [];
         }
-        return request('/learn/task/delay/'+taskId,{},'PUT')
+        return request('/learn/task/delay',delayQo,'PUT')
     }
 
 
@@ -230,11 +230,11 @@ export class TaskService {
      * @description finish
      * @return {HttpResponse} result
      */
-    static async finish(taskId) {
-        if(!taskId){
+    static async finish(finishQo) {
+        if(!finishQo){
             return [];
         }
-        return request('/learn/task/finish/'+taskId,{},'PUT')
+        return request('/learn/task/finish',finishQo,'PUT')
     }
     
 }
