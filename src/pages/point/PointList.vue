@@ -105,10 +105,10 @@ function resetList() {
 
 /** 编辑知识点 */
 function editPoint(pointId){
-  router.push({name:'PointList', state: { topicId : topicId,point:pointId}});
+  router.push({name:'PointEdit', state: { topicId: topicId,pointId:pointId}});
 }
 function newPoint(){
-  router.push({name:'PointList', state: { topicId : topicId,point:null}});
+  router.push({name:'PointList', state: { topicId : topicId,pointId:null}});
 }
 
 /** 回退至主题页 */
