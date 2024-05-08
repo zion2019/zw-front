@@ -16,11 +16,10 @@ axios.interceptors.request.use(
   config => {
   // 配置请求头
     config.headers = {
-      //'Content-Type':'application/x-www-form-urlencoded',   // 传参方式表单
-      'Content-Type':'application/json;charset=UTF-8',        // 传参方式json
       'Authorization':localStorage.getItem("USER_TOKEN"),
       'Header_key_user_id':localStorage.getItem("Header_key_user_id"),
     } as any;
+    
     store.commit('startLoading');
     return config;
     
@@ -68,27 +67,42 @@ axios.interceptors.response.use(
   }
 );
 
+export function fileUpload(url='',param={}){
+  return new Promise((resolve,reject)=>{
+    let config = { headers: { "Content-Type": "multipart/form-data" } }
+    let promise = axios.post(url, param, config);
+
+    //处理返回
+    promise.then(res=>{
+      resolve(res.data)
+    }).catch(err=>{
+      reject(err)
+    })
+  })
+
+}
+
 // 封装 GET POST 请求并导出
 export function request(url='',params={},type='POST'){
-//设置 url params type 的默认值
-return new Promise((resolve,reject)=>{
-  let promise
-  if (type.toUpperCase() === 'GET') {
-    promise = axios.get(url, { params });
-  } else if (type.toUpperCase() === 'POST') {
-    promise = axios.post(url, params);
-  } else if (type.toUpperCase() === 'DELETE') {
-    promise = axios.delete(url, { params });
-  } else if (type.toUpperCase() === 'PUT') {
-    promise = axios.put(url, params);
-  }
-  //处理返回
-  promise.then(res=>{
-    resolve(res.data)
-  }).catch(err=>{
-    reject(err)
+  //设置 url params type 的默认值
+  return new Promise((resolve,reject)=>{
+    let promise
+    if (type.toUpperCase() === 'GET') {
+      promise = axios.get(url, { params });
+    } else if (type.toUpperCase() === 'POST') {
+      promise = axios.post(url, params);
+    } else if (type.toUpperCase() === 'DELETE') {
+      promise = axios.delete(url, { params });
+    } else if (type.toUpperCase() === 'PUT') {
+      promise = axios.put(url, params);
+    }
+    //处理返回
+    promise.then(res=>{
+      resolve(res.data)
+    }).catch(err=>{
+      reject(err)
+    })
   })
-})
 }
 
 

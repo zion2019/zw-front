@@ -1,4 +1,4 @@
-import { request } from './axios'
+import { request,fileUpload } from './axios'
 
 /**
  * @description -封装User类型的接口方法
@@ -141,6 +141,10 @@ export class PointService {
             return [];
         }
         return request('/learn/point',{pointId},'DELETE');
+    }
+
+    static async uploadFiles(formData) {
+        return fileUpload('/learn/point/import/excel',formData);
     }
 }
 

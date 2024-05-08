@@ -4,6 +4,7 @@ import Learning from '../pages/Learning.vue';
 import TopicEdit from '../pages/topic/TopicEdit.vue';
 import TopicList from '../pages/topic/TopicList.vue';
 import PointEdit from '../pages/point/PointEdit.vue';
+import PointImport from '../pages/point/PointImport.vue';
 import PointList from '../pages/point/PointList.vue';
 import TaskEdit from '../pages/task/TaskEdit.vue';
 import TaskList from '../pages/task/TaskList.vue';
@@ -45,6 +46,12 @@ const routes = [
       path: '/point',
       name: 'PointEdit',
       component: PointEdit,
+      props: true
+    },
+    {
+      path: '/point/import',
+      name: 'PointImport',
+      component: PointImport,
       props: true
     },
     {

@@ -114,6 +114,15 @@ if(pointId){
       ,'function': ()=>{dialogVisible.value = true}
     }
   )
+}else{
+  buttons.push(
+    {
+      'type':'danger'
+      ,'isPlain':false
+      ,'label':'去导入'
+      ,'function': ()=>{router.push({name:'PointImport'});}
+    }
+  )
 }
 // 拆分知识点按钮
 buttons.push(
