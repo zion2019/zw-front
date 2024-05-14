@@ -17,21 +17,19 @@
 
             <!-- 答案区域 -->
             <div class="solution-container">
-                <div class = "solution" v-show="showSkeleton">
-                    <el-skeleton :rows="5" :animated=true />
+                <div class="solutions" v-for="(subPoint, index) in practice.point.subPoints" :key="index">
+                    <div  class="solution" >
+                        <div class="from-label" v-if="showSubPointTitle">({{ index + 1 }}){{subPoint.title}}</div>
+                        <el-skeleton :rows="5" :animated=true v-show="showSkeleton" />
+                        <div v-html="subPoint.detailContent" class="preview-content" v-show="!showSkeleton"></div>
+                    </div>
                 </div>
-                
-                <div v-show="!showSkeleton" class="solution" v-for="(subPoint, index) in practice.point.subPoints" :key="index">
-                    <div class="from-label">({{ index + 1 }}){{subPoint.title}}</div>
-                    <div v-html="subPoint.detailContent" class="preview-content"></div>
-
-                </div>
-                
             </div>
 
             <!-- 操作区域 -->
             <div class="buttons" v-if="showButton">
                 <el-button type="info"  @click="goback()">返回</el-button>
+                <el-button type="warning" v-if="!showSubPointTitle" @click="showSubPoint()">提示</el-button>
                 <el-button type="danger" v-if="showSkeleton" @click="practise('FORGET')">忘记</el-button>
                 <el-button type="success" v-if="showSkeleton" @click="practise('DONE')">记得</el-button>
                 <el-button type="warning" v-if="!showSkeleton" @click="loadNextPoint">Next</el-button>
@@ -74,6 +72,7 @@ const practice = ref({
 
 // 骨架屏是否展示
 const showSkeleton = ref(true);
+const showSubPointTitle = ref(false);
 const showButton = ref(true);
 
 /** 主题下题目加载 */
@@ -122,6 +121,10 @@ function practise(result:string){
     })
     // 隐藏骨架屏
     showSkeleton.value = false;
+}
+
+function showSubPoint(){
+    showSubPointTitle.value = true;
 }
 </script>
 
