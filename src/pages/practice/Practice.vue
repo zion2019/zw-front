@@ -90,6 +90,7 @@ const loadNextPoint = async () =>{
         lazyDirectList();
     } finally {
         showSkeleton.value = true;
+        showSubPointTitle.value = false;
     }
 }
 function lazyDirectList(){
@@ -121,6 +122,7 @@ function practise(result:string){
     })
     // 隐藏骨架屏
     showSkeleton.value = false;
+    showSubPointTitle.value = true;
 }
 
 function showSubPoint(){
