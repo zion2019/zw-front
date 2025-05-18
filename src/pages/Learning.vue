@@ -254,11 +254,6 @@
 
 
 <style scoped>
-.quick_text {
-  font-size: 16px;
-  font-weight: bold;
-  color: #ffffff;
-}
 .quick-option {
   display: flex;
   flex-direction: column;
@@ -283,29 +278,14 @@
 .progress {
   height: 30%;
 }
-
-.el-carousel__item {
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .el-carousel__item h3 {
     color: #475669;
     font-size: 14px;
     opacity: 0.75;
     line-height: 200px;
     margin: 0;
-  }
-
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
 }
 
-.el-carousel__item:nth-child(2n+1) {
-  background-color: #d3dce6;
-}
 
 .progress-container {
     position: absolute;
@@ -360,12 +340,6 @@
   background-repeat: no-repeat;
 }
 
-.card-image {
-  height: 50%;
-  overflow: hidden;
-  border-radius: 20px 20px 0 0;
-}
-
 .card-image img {
   width: 100%;
   height: 100%;
@@ -403,36 +377,9 @@
     margin-bottom: 10%;
   }
 }
-.el-row {
-    margin-bottom: 20px;
-}
-.el-col {
-  border-radius: 4px;
-}
-.bg-purple-new {
-  background-color: #e24487;
-}
-.bg-purple-blue {
-  background: #02448f;
-}
-.bg-purple-black {
-  background: #00040c;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .grid-content img {
   width: 10%;
   height: 90%;
-}
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
 }
 
 /* 轮播图背景样式 start */

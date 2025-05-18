@@ -8,6 +8,9 @@
         <div class="dock-item">
           <img src="../assets/learning.svg" alt="Learning" @click="router.push('/learning')">
         </div>
+        <div class="dock-item">
+          <img src="../assets/bill_icon.svg" alt="Bill" @click="router.push('/bill')">
+        </div>
       </div>
       
     </div>

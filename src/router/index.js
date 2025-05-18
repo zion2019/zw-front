@@ -13,6 +13,9 @@ import PracticeList from '../pages/practice/PracticeList.vue';
 import Practice from '../pages/practice/Practice.vue';
 import Login from '../pages/Login.vue';
 import Register from '../pages/Register.vue';
+import BillIndex from '../pages/bill/BillIndex.vue';
+import BillEdit from '../pages/bill/BillEdit.vue';
+import BillTagList from '../pages/bill/BillTagList.vue';
 
 const routes = [
     {
@@ -24,6 +27,21 @@ const routes = [
       path: '/learning',
       name: 'Learning',
       component: Learning
+    },
+    {
+        path: '/bill',
+        name: 'Bill',
+        component: BillIndex
+    },
+    {
+        path: '/bill/edit',
+        name: 'BillEdit',
+        component: BillEdit
+    },
+    {
+        path: '/bill/tag/list',
+        name: 'BillTagList',
+        component: BillTagList
     },
     {
       path: '/topic',

@@ -242,3 +242,94 @@ export class TaskService {
     }
     
 }
+
+/**
+ * @description -封装Bill服务的接口方法
+ */
+export class BillService {
+
+    /**
+     * @description 获取当月饼图数据
+     * @return {HttpResponse} result
+     */
+    static async chartData() {
+        // 模拟数据
+        return {
+            code: 200,
+            data: [
+                { name: '餐饮', value: 1200, color: '#5470C6' },
+                { name: '交通', value: 800, color: '#91CC75' },
+                { name: '购物', value: 3000, color: '#FAC858' },
+                { name: '娱乐', value: 600, color: '#EE6666' },
+                { name: '其他', value: 400, color: '#73C0DE' }
+            ]
+        };
+    }
+
+    /**
+     * @description 获取消费明细列表
+     * @return {HttpResponse} result
+     */
+    static async list(params) {
+        // 模拟数据
+        return {
+            code: 200,
+            dataList: [
+                { id: '1', label: '麦当劳午餐', amount: 35, date: '2024-03-15', type: '支出', tag: '餐饮' },
+                { id: '2', label: '地铁费', amount: 5, date: '2024-03-15', type: '支出', tag: '交通' },
+                { id: '3', label: '工资收入', amount: 8000, date: '2024-03-10', type: '收入', tag: '工资' },
+                { id: '4', label: '电影票', amount: 70, date: '2024-03-14', type: '支出', tag: '娱乐' },
+                { id: '5', label: '衣服购买', amount: 450, date: '2024-03-13', type: '支出', tag: '购物' }
+            ],
+            total: 5
+        };
+    }
+
+    /**
+     * @description 获取标签树
+     * @return {HttpResponse} result
+     */
+    static async tagTree(excludeId = '') {
+        return {
+            code: 200,
+            dataList: [
+                {
+                    id: '1',
+                    label: '收入',
+                    children: [
+                        { id: '11', label: '工资', parentId: '1', type: '收入', color: 'green' },
+                        { id: '12', label: '兼职', parentId: '1', type: '收入', color: 'lightgreen' }
+                    ]
+                },
+                {
+                    id: '2',
+                    label: '支出',
+                    children: [
+                        { id: '21', label: '餐饮', parentId: '2', type: '支出', color: 'red' },
+                        { id: '22', label: '交通', parentId: '2', type: '支出', color: 'orange' },
+                        { id: '23', label: '购物', parentId: '2', type: '支出', color: 'purple' },
+                        { id: '24', label: '娱乐', parentId: '2', type: '支出', color: 'pink' }
+                    ]
+                }
+            ]
+        };
+    }
+
+    /**
+     * @description 标签保存
+     * @return {HttpResponse} result
+     */
+    static async saveTag(tag) {
+        console.log('保存标签:', tag);
+        return { code: 200, message: '保存成功' };
+    }
+
+    /**
+     * @description 删除标签
+     * @return {HttpResponse} result
+     */
+    static async removeTag(id) {
+        console.log('删除标签:', id);
+        return { code: 200, message: '删除成功' };
+    }
+}
