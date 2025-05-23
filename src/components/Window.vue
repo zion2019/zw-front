@@ -16,17 +16,15 @@
     <div class="window-content-container">
       <div class="window-content">
         <slot></slot>
-        <div class="window-option-container">
-          <el-button v-for="button in (buttons as Button[])" 
-            :type="button.type" 
-            :plain="button.isPlain ? true : false"
-            @click="button.function">
-            {{ button.label }}
-          </el-button>
-        </div>
       </div>
-
-
+      <div class="window-option-container">
+        <el-button v-for="button in (buttons as Button[])"
+                   :type="button.type"
+                   :plain="button.isPlain ? true : false"
+                   @click="button.function">
+          {{ button.label }}
+        </el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -102,8 +100,9 @@ const resetButton = (button: string) => {
 .window-content{
   width: 100%;
   height: 100%;
-  position: absolute;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .window {
@@ -113,6 +112,8 @@ const resetButton = (button: string) => {
   border-radius: 5px;
   overflow: hidden;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .window-top-bar {
@@ -121,12 +122,6 @@ const resetButton = (button: string) => {
   display: flex;
   align-items: center;
   padding: 0 10px;
-}
-
-.title {
-  flex-grow: 1;
-  font-weight: bold;
-  color: #333;
 }
 
 .window-top-buttons {

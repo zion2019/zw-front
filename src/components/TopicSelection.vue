@@ -46,8 +46,6 @@ const clear = ()=>{
 
 const topicTreeDatas = ref([]);
 onMounted(async () => {
-    console.log('mounted',props.value)
-    
     let topicId = route.query.topicId;
     TopicService.tree(topicId)
     .then((res:any)=>{

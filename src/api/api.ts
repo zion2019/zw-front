@@ -250,18 +250,25 @@ export class BillService {
 
     /**
      * @description 获取当月饼图数据
+     * @param {Object} params - 查询参数
+     * @param {string} params.startDate - 开始日期
+     * @param {string} params.endDate - 结束日期
+     * @param {Array} params.tags - 标签数组
      * @return {HttpResponse} result
      */
-    static async chartData() {
+    static async chartData(params = {}) {
+        // 模拟处理参数
+        const { startDate, endDate, tags } = params;
+
         // 模拟数据
         return {
             code: 200,
             data: [
-                { name: '餐饮', value: 1200, color: '#5470C6' },
-                { name: '交通', value: 800, color: '#91CC75' },
-                { name: '购物', value: 3000, color: '#FAC858' },
-                { name: '娱乐', value: 600, color: '#EE6666' },
-                { name: '其他', value: 400, color: '#73C0DE' }
+                { name: '餐饮', value: 1200, color: '#5470C6',categoryId:"1" },
+                { name: '交通', value: 800, color: '#91CC75' ,categoryId:"2"},
+                { name: '购物', value: 3000, color: '#FAC858' ,categoryId:"3"},
+                { name: '娱乐', value: 600, color: '#EE6666' ,categoryId:"4"},
+                { name: '其他', value: 400, color: '#73C0DE' ,categoryId:"5"}
             ]
         };
     }
@@ -275,11 +282,10 @@ export class BillService {
         return {
             code: 200,
             dataList: [
-                { id: '1', label: '麦当劳午餐', amount: 35, date: '2024-03-15', type: '支出', tag: '餐饮' },
-                { id: '2', label: '地铁费', amount: 5, date: '2024-03-15', type: '支出', tag: '交通' },
-                { id: '3', label: '工资收入', amount: 8000, date: '2024-03-10', type: '收入', tag: '工资' },
-                { id: '4', label: '电影票', amount: 70, date: '2024-03-14', type: '支出', tag: '娱乐' },
-                { id: '5', label: '衣服购买', amount: 450, date: '2024-03-13', type: '支出', tag: '购物' }
+                { id: '1', categoryDes: '工作餐', amount: -35, date: '2024-03-15 12:54', remark:'重庆小面',categoryColor:'#5470C6' },
+                { id: '2', categoryDes: '消费', amount: -8.8, date: '2024-03-15 07:32', remark:'全家美式',categoryColor:'#91CC75' },
+                { id: '3', categoryDes: '房租', amount: -1030, date: '2024-03-15 12:54', remark:'房租',categoryColor:'#FAC858'},
+                { id: '4', categoryDes: '聚餐', amount: -88, date: '2024-03-15 20:54', remark:'重庆火锅',categoryColor:'#73C0DE' },
             ],
             total: 5
         };
@@ -331,5 +337,30 @@ export class BillService {
     static async removeTag(id) {
         console.log('删除标签:', id);
         return { code: 200, message: '删除成功' };
+    }
+
+    /**
+     * @description 获取账单详情
+     * @param {Object} params - 请求参数
+     * @param {string} params.id - 账单ID
+     * @return {HttpResponse} result
+     */
+    static async billDetail(params = {}) {
+        const { id } = params;
+
+        // 模拟数据
+        return {
+            code: 200,
+            data: {
+                id: id,
+                categoryDes: '房租',
+                amount: -1030,
+                date: '2024-03-15 12:54',
+                remark: '房租',
+                categoryColor: '#FAC858',
+                paymentMethod: '支付宝',
+                location: '上海'
+            }
+        };
     }
 }

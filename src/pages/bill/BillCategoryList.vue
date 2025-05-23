@@ -1,6 +1,6 @@
 <template>
   <Window :buttons="buttons">
-    <List editRoutor="BillTagEdit" @keywordChange="keywordChange">
+    <List editRoutor="BillCategoryEdit" @keywordChange="keywordChange">
       <div class="tree-container">
         <el-tree
           ref="treeRef"
@@ -9,7 +9,7 @@
           :data="listData"
           :props="defaultProps"
           :filter-node-method="filterNode"
-          empty-text="快创建一个账单标签吧"
+          empty-text="快创建一个账单类型吧"
         >
           <template #default="{ node, data }">
             <span class="z-tree-node">
@@ -33,7 +33,7 @@ import Window from '../../components/Window.vue';
 import List from '../../components/List.vue';
 import { ElTree } from 'element-plus';
 import { useRouter } from 'vue-router';
-import { BillService } from '../../api/api';
+import { BillCategoryService } from '@/api/bill_api';
 
 const router = useRouter();
 
@@ -72,7 +72,7 @@ const filterNode = (value, data) => {
 
 const listData = ref([]);
 onMounted(async () => {
-  const res = await BillService.tagTree();
+  const res = await BillCategoryService.categoryTree();
   listData.value = res.dataList;
 });
 
@@ -80,3 +80,31 @@ const edit = (node) => {
   router.push({ name: 'BillTagEdit', state: { tagId: node.data.id } });
 };
 </script>
+
+<style scoped>
+.z-tree-node {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  padding-right: 8px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.tree-container {
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 0;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+.el-tree {
+  background: #f0f0f0;
+}
+.el-tree-node__content{
+  background: #f0f0f0;
+}
+
+</style>

@@ -232,7 +232,7 @@ function remove (){
 </script>
 
 <style scoped>
-.form-wrapper {
+.stats-wrapper {
   margin-bottom: 20px;
   margin: 20px;
   max-height: 400px;

@@ -6,7 +6,11 @@
         <div class="card-content">
           <h2>当月账单～</h2>
           <div class="progress" >
-            <div class="chart" ref="chartRef"></div>
+            <BillChart
+                :start-day="statsStartDate"
+                :end-day="statsEndDate"
+                :tags="selectedTags"
+            />
           </div>
         </div>
       </div>
@@ -16,15 +20,18 @@
         <div class="card-content">
           <h2>快速入口～</h2>
           <div class="quick-option">
+            <button class="quick-button" style="background-color: #4169E1;">
+              <el-text style="color: #fff;font-weight: bold;" @click="quick('BillStats')">
+                <el-icon ><CirclePlus /></el-icon>更多统计
+              </el-text>
+            </button>
             <button class="quick-button" style="background-color: rgb(135 63 90);" @click="quick('BillEdit')">
               <el-text style="color: #fff;font-weight: bold;"><el-icon ><CirclePlus /></el-icon>记一笔</el-text>
             </button>
             <button class="quick-button" style="background-color: #E0115F;" @click="quick('PointEdit')">
               <el-text style="color: #fff;font-weight: bold;"><el-icon ><CirclePlus /></el-icon>费用标签</el-text>
             </button>
-            <button class="quick-button" style="background-color: #4169E1;">
-              <el-text style="color: #fff;font-weight: bold;"><el-icon ><CirclePlus /></el-icon>待OTA...</el-text>
-            </button>
+
             <button class="quick-button" style="background-color: #FFD700;" >
               <el-text style="font-weight: bold;"><el-icon ><CirclePlus /></el-icon>待OTA...</el-text>
             </button>
@@ -38,52 +45,36 @@
 </template>
 
 <script setup>
-import { onMounted,ref } from 'vue';
+import { ref } from 'vue';
 import Window from '../../components/Window.vue'
 import { useRouter } from 'vue-router';
-import {PracticeService,TaskService} from '../../api/api';
-import { ElMessage } from 'element-plus'
-import * as echarts from 'echarts'
+import BillChart from '../../components/BillChart.vue'; // 消费统计饼图
 
 const router = useRouter()
 const quick = (component) => {
   router.push({ name: component })
 }
 
-const dateRange = ref([new Date(new Date().getFullYear(), new Date().getMonth(), 1), new Date()])
-const chartRef = ref(null)
+// 首页统计范围
+const statsStartDate = ref(getFirstDayOfMonth());
+const statsEndDate = ref(getStartOfDay(new Date()));
+// 可以添加一个选中的标签
+const selectedTags = ref([]);
 
-onMounted(() => {
-  const chart = echarts.init(chartRef.value)
-  const pieData = [
-    { name: '餐饮', value: 1200, itemStyle: { color: '#5470C6' } },
-    { name: '交通', value: 800, itemStyle: { color: '#91CC75' } },
-    { name: '购物', value: 3000, itemStyle: { color: '#FAC858' } },
-    { name: '娱乐', value: 600, itemStyle: { color: '#EE6666' } },
-    { name: '其他', value: 400, itemStyle: { color: '#73C0DE' } }
-  ]
+// 获取当月的第一天并设置时间为零点
+function getFirstDayOfMonth() {
+  const today = new Date();
+  const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+  firstDay.setHours(0, 0, 0, 0);
+  return firstDay;
+}
 
-  chart.setOption({
-    tooltip: { trigger: 'item' },
-    legend: { show:false },
-    series: [{
-      name: '金额占比',
-      type: 'pie',
-      // radius: ['40%', '70%'],
-      avoidLabelOverlap: true,
-      label: { show: true },
-      emphasis: {
-        label: { show: true, fontSize: '18', fontWeight: 'bold' },
-        labelLine: { show: true }
-      },
-      data: pieData
-    }]
-  })
-
-  window.addEventListener('resize', () => {
-    chart.resize()
-  })
-})
+// 获取当前日期并设置时间为零点
+function getStartOfDay(date) {
+  const d = new Date(date);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
 
 </script>
 

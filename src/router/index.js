@@ -15,7 +15,9 @@ import Login from '../pages/Login.vue';
 import Register from '../pages/Register.vue';
 import BillIndex from '../pages/bill/BillIndex.vue';
 import BillEdit from '../pages/bill/BillEdit.vue';
-import BillTagList from '../pages/bill/BillTagList.vue';
+import BillStats from '../pages/bill/BillStats.vue';
+import BillCategoryList from "@/pages/bill/BillCategoryList.vue";
+import BillCategoryEdit from "@/pages/bill/BillCategoryEdit.vue";
 
 const routes = [
     {
@@ -39,9 +41,19 @@ const routes = [
         component: BillEdit
     },
     {
-        path: '/bill/tag/list',
-        name: 'BillTagList',
-        component: BillTagList
+        path: '/bill/category/list',
+        name: 'BillCategoryList',
+        component: BillCategoryList
+    },
+    {
+        path: '/bill/category/edit',
+        name: 'BillCategoryEdit',
+        component: BillCategoryEdit
+    },
+    {
+        path: '/bill/stats',
+        name: 'BillStats',
+        component: BillStats
     },
     {
       path: '/topic',
