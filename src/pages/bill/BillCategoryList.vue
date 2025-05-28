@@ -52,7 +52,7 @@ const buttons = [
 ];
 
 function toNew() {
-  router.push({ name: 'BillTagEdit', state: { tagId: null } });
+  router.push({ name: 'BillCategoryEdit', state: { categoryId: null } });
 }
 
 const treeRef = ref();
@@ -77,7 +77,7 @@ onMounted(async () => {
 });
 
 const edit = (node) => {
-  router.push({ name: 'BillTagEdit', state: { tagId: node.data.id } });
+  router.push({ name: 'BillCategoryEdit', state: { categoryId: node.data.id } });
 };
 </script>
 

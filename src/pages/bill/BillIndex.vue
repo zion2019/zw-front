@@ -6,11 +6,7 @@
         <div class="card-content">
           <h2>当月账单～</h2>
           <div class="progress" >
-            <BillChart
-                :start-day="statsStartDate"
-                :end-day="statsEndDate"
-                :tags="selectedTags"
-            />
+            <BillChart />
           </div>
         </div>
       </div>
@@ -20,16 +16,18 @@
         <div class="card-content">
           <h2>快速入口～</h2>
           <div class="quick-option">
-            <button class="quick-button" style="background-color: #4169E1;">
-              <el-text style="color: #fff;font-weight: bold;" @click="quick('BillStats')">
-                <el-icon ><CirclePlus /></el-icon>更多统计
-              </el-text>
-            </button>
+
             <button class="quick-button" style="background-color: rgb(135 63 90);" @click="quick('BillEdit')">
               <el-text style="color: #fff;font-weight: bold;"><el-icon ><CirclePlus /></el-icon>记一笔</el-text>
             </button>
-            <button class="quick-button" style="background-color: #E0115F;" @click="quick('PointEdit')">
-              <el-text style="color: #fff;font-weight: bold;"><el-icon ><CirclePlus /></el-icon>费用标签</el-text>
+            <button class="quick-button" style="background-color: #4169E1;">
+              <el-text style="color: #fff;font-weight: bold;" @click="quick('BillStats')">
+                <el-icon ><CirclePlus /></el-icon>消费统计
+              </el-text>
+            </button>
+
+            <button class="quick-button" style="background-color: #E0115F;" @click="quick('BillCategoryList')">
+              <el-text style="color: #fff;font-weight: bold;"><el-icon ><CirclePlus /></el-icon>费用类型</el-text>
             </button>
 
             <button class="quick-button" style="background-color: #FFD700;" >
@@ -55,26 +53,6 @@ const quick = (component) => {
   router.push({ name: component })
 }
 
-// 首页统计范围
-const statsStartDate = ref(getFirstDayOfMonth());
-const statsEndDate = ref(getStartOfDay(new Date()));
-// 可以添加一个选中的标签
-const selectedTags = ref([]);
-
-// 获取当月的第一天并设置时间为零点
-function getFirstDayOfMonth() {
-  const today = new Date();
-  const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-  firstDay.setHours(0, 0, 0, 0);
-  return firstDay;
-}
-
-// 获取当前日期并设置时间为零点
-function getStartOfDay(date) {
-  const d = new Date(date);
-  d.setHours(0, 0, 0, 0);
-  return d;
-}
 
 </script>
 

@@ -23,10 +23,19 @@
                             <el-tree-select 
                                 check-strictly 
                                 :props="treeProps"
-                                placeholder="所属类别"
+                                placeholder="所属父级"
                                 :data="categoryTreeDataList"
                                 v-model="category.parentId" />
                         </el-form-item>
+
+                      <!-- 新增的单选框 -->
+                      <el-form-item label="类型：">
+                        <el-radio-group v-model="category.categoryType" size="small">
+                          <el-radio :label="0" border>支出</el-radio>
+                          <el-radio :label="1" border>收入</el-radio>
+                        </el-radio-group>
+                      </el-form-item>
+
 
                         <el-form-item prop="color">
                             <el-select v-model="category.color" placeholder="背景颜色">
@@ -115,7 +124,8 @@
         title:"",
         color:"",
         parentId:"",
-        code:""
+        code:"",
+        categoryType:"0"
     });
 
     onMounted(async () => {

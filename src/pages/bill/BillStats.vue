@@ -31,10 +31,10 @@
                   popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
               >
                 <template #reference>
-                  <div class="list-item" @click="handleClick(item)">
+                  <div class="list-item" >
                     <div class="card-left">
-                      <div class="billTime" style="color: black">{{ item.date }}</div>
-                      <div class="categoryDesc">{{ item.categoryDes }}</div>
+                      <div class="billTime" style="color: black">{{ item.billDate }}</div>
+                      <div class="categoryDesc">{{ item.categoryDesc }}</div>
                     </div>
                     <div class="card-right" :style="{ color: item.categoryColor }">
                       ¥{{ item.amount }}
@@ -45,14 +45,15 @@
 
                   <div style="display: flex; gap: 16px; flex-direction: column;">
                     <div style="text-align: center;">
-                      <div style="font-size: 16px; font-weight: bold;">{{ item.date }}</div>
-                      <div style="font-size: 16px; font-weight: bold;">{{ item.categoryDes }}</div>
-                      <div style="color: var(--el-color-info); margin-top: 4px;">{{ item.remark }}</div>
+                      <div style="font-size: 16px; font-weight: bold;">{{ item.billDate }}</div>
+                      <div style="font-size: 16px; font-weight: bold;">{{ item.categoryDesc }}</div>
+                      <div style="color: var(--el-color-info); margin-top: 4px;">{{ item.billRemark }}</div>
+                      <div style="color: var(--el-color-info); margin-top: 4px;">{{ item.location }}</div>
                       <div style="font-size: 20px; font-weight: bold; margin-top: 8px;" :style="{ color: item.categoryColor }">
                         ¥{{ item.amount }}
                       </div>
                       <div style="margin-top: 16px;">
-                        <el-button type="primary" size="small" @click="editBill(item)">编辑账单</el-button>
+                        <el-button type="primary" size="small" @click="toEditBill(item)">编辑账单</el-button>
                       </div>
                     </div>
                   </div>
@@ -76,7 +77,7 @@
   import { ref } from 'vue';
   import Window from '../../components/Window.vue';
   import BillChart from '../../components/BillChart.vue';
-  import { BillService } from '@/api/bill_api';
+  import { BillCategoryService } from '@/api/bill_api';
   import LCalendar from '../../components/LCalendar.vue';
 
   /**  路由导入 */
@@ -98,11 +99,25 @@
     reloadBillDetails();
   }
 
+
+  /**
+   * 当前查询的分类ID默认全量
+   */
+  const queryCategoryId = ref(0);
   /**
    * 监听饼图变化
    */
   function intoCategory(categoryId){
+    queryCategoryId.value = categoryId;
     reloadBillDetails();
+  }
+
+  /**
+   * 跳转账单编辑
+   * @param bill
+   */
+  function toEditBill(bill){
+    router.push({name:'BillEdit', state: { billId : bill.id}});
   }
 
   /**
@@ -143,15 +158,15 @@
 
   const load = async () => {
     if (loading.value || noMore.value) return;
-    console.log("加载列表")
     loading.value = true;
 
     try {
-      const res = await BillService.billDetailPage({
+      const res = await BillCategoryService.billsPage({
         pageNo: pageNo.value,
         pageSize: pageSize.value,
-        startDate: startDate,
-        endDate: endDate,
+        statsBillSTime: startDate.value,
+        statsBillETime: endDate.value,
+        parentId: queryCategoryId.value,
       });
 
       if (res.dataList && res.dataList.length > 0) {
@@ -163,6 +178,7 @@
       noMore.value = list.value.length >= total.value;
     } catch (e) {
       console.error(e);
+      noMore.value = true;
     } finally {
       loading.value = false;
       disabled.value = loading.value || noMore.value;
@@ -189,7 +205,7 @@
       'type':'warning'
       ,'isPlain':true
       ,'label':'返回'
-      ,'function':()=>{router.push({name:'BillIndex'})}
+      ,'function':()=>{router.push({name:'Bill'})}
     },
   ]
 
