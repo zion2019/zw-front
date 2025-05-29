@@ -20,8 +20,8 @@
             <button class="quick-button" style="background-color: rgb(135 63 90);" @click="quick('BillEdit')">
               <el-text style="color: #fff;font-weight: bold;"><el-icon ><CirclePlus /></el-icon>记一笔</el-text>
             </button>
-            <button class="quick-button" style="background-color: #4169E1;">
-              <el-text style="color: #fff;font-weight: bold;" @click="quick('BillStats')">
+            <button class="quick-button" style="background-color: #4169E1;" @click="quick('BillStats')">
+              <el-text style="color: #fff;font-weight: bold;" >
                 <el-icon ><CirclePlus /></el-icon>消费统计
               </el-text>
             </button>
