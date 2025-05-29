@@ -37,7 +37,7 @@
                       <div class="categoryDesc">{{ item.categoryDesc }}</div>
                     </div>
                     <div class="card-right" :style="{ color: item.categoryColor }">
-                      ¥{{ item.amount }}
+                      ¥{{ item.categoryType === 1 ? '+' : '-' }}{{ item.amount }}
                     </div>
                   </div>
                 </template>
@@ -50,7 +50,7 @@
                       <div style="color: var(--el-color-info); margin-top: 4px;">{{ item.billRemark }}</div>
                       <div style="color: var(--el-color-info); margin-top: 4px;">{{ item.location }}</div>
                       <div style="font-size: 20px; font-weight: bold; margin-top: 8px;" :style="{ color: item.categoryColor }">
-                        ¥{{ item.amount }}
+                        ¥{{ item.categoryType === 1 ? '+' : '-' }}{{ item.amount }}
                       </div>
                       <div style="margin-top: 16px;">
                         <el-button type="primary" size="small" @click="toEditBill(item)">编辑账单</el-button>
