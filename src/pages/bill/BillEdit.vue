@@ -99,6 +99,8 @@ import {ElMessage} from "element-plus";
     location: ''
   })
 
+// 初始化最近使用的分类标签（完整对象）
+const recentCategories = ref([]);
 
   onMounted(async () => {
     // 回显信息加载
@@ -140,16 +142,10 @@ import {ElMessage} from "element-plus";
     bill.value.categoryId = item.id
   }
 
-  // 初始化最近使用的分类标签（完整对象）
-  const recentCategories = ref([]);
-
   // 选择一个最近使用的标签
   const selectCategory = (category) => {
-    const matched = recentCategories.find(opt => opt.id === category.id)
-    if (matched) {
-      bill.value.categoryDesc = matched.title
-      bill.value.categoryId = matched.id
-    }
+    bill.value.categoryDesc = category.title;
+    bill.value.categoryId = category.id;
   }
 
 
