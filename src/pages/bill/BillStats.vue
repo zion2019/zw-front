@@ -33,8 +33,9 @@
                 <template #reference>
                   <div class="list-item" >
                     <div class="card-left">
+                      <div class="billTag"><el-tag  :color="item.categoryColor" effect="dark">{{ item.categoryDesc }}</el-tag></div>
                       <div class="billTime" style="color: black">{{ item.billDate }}</div>
-                      <div class="categoryDesc">{{ item.categoryDesc }}</div>
+                      <div class="categoryDesc">{{ item.billRemark }}</div>
                     </div>
                     <div class="card-right" :style="{ color: item.categoryColor }">
                       ¥{{ item.categoryType === 1 ? '+' : '-' }}{{ item.amount }}
@@ -255,7 +256,6 @@
   .infinite-list-wrapper {
     max-height: 60vh;
     text-align: center;
-    border: 1px solid #ddd; /* Add a border */
     padding: 10px; /* Add padding for spacing */
     border-radius: 10px;
     margin-bottom: 10px;
@@ -271,8 +271,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid #ddd; /* Add a border */
-    border-radius: 10px;
   }
 
   .infinite-list-wrapper .list-item + .list-item {
@@ -306,6 +304,9 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+  .billTag {
+    text-align: left;
   }
 
   .billTime {
