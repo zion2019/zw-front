@@ -110,6 +110,7 @@
    */
   function intoCategory(categoryId){
     queryCategoryId.value = categoryId;
+    pageNo.value = 1;
     reloadBillDetails();
   }
 
